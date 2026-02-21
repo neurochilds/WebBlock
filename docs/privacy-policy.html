@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebBlock Privacy Policy</title>
+    <meta
+      name="description"
+      content="Privacy policy for WebBlock, a Chrome extension for blocking distracting websites."
+    />
+    <link rel="icon" type="image/png" sizes="128x128" href="./assets/icon128.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-0: #060a14;
+        --bg-1: #0d1630;
+        --surface-1: rgba(12, 20, 38, 0.78);
+        --border-soft: rgba(148, 163, 184, 0.22);
+        --text-strong: #e7ecf7;
+        --text-body: #c9d3e7;
+        --text-muted: #94a3b8;
+        --accent: #7a77ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text-body);
+        background:
+          radial-gradient(circle at 6% -8%, rgba(122, 119, 255, 0.28), transparent 30%),
+          radial-gradient(circle at 96% 2%, rgba(255, 90, 70, 0.14), transparent 34%),
+          linear-gradient(165deg, var(--bg-1), var(--bg-0));
+      }
+
+      .container {
+        width: min(900px, 92vw);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(10px);
+        background: rgba(6, 10, 20, 0.86);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+      }
+
+      .nav {
+        height: 74px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .brand img {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+      }
+
+      .brand-name {
+        display: block;
+        font-family: "Sora", sans-serif;
+        color: var(--text-strong);
+        font-weight: 700;
+        font-size: 1.28rem;
+        line-height: 1;
+      }
+
+      .brand-tagline {
+        display: block;
+        margin-top: 3px;
+        color: var(--text-muted);
+        font-size: 0.88rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        border: 1px solid var(--border-soft);
+        color: var(--text-strong);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.94rem;
+        line-height: 1;
+        padding: 12px 16px;
+        background: rgba(8, 14, 28, 0.65);
+      }
+
+      .policy {
+        margin: 38px auto 30px;
+        background: var(--surface-1);
+        border: 1px solid var(--border-soft);
+        border-radius: 18px;
+        padding: clamp(20px, 3vw, 34px);
+      }
+
+      h1 {
+        margin: 0;
+        color: var(--text-strong);
+        font-family: "Sora", sans-serif;
+        font-size: clamp(1.8rem, 2.2vw + 1rem, 2.45rem);
+      }
+
+      .updated {
+        margin: 10px 0 0;
+        color: var(--text-muted);
+      }
+
+      h2 {
+        margin: 28px 0 10px;
+        color: var(--text-strong);
+        font-family: "Sora", sans-serif;
+        font-size: 1.15rem;
+      }
+
+      p,
+      li {
+        line-height: 1.72;
+        margin: 0;
+      }
+
+      ul {
+        margin: 10px 0 0;
+        padding-left: 20px;
+      }
+
+      li + li {
+        margin-top: 8px;
+      }
+
+      a {
+        color: #c9d2ff;
+      }
+
+      .small {
+        margin-top: 26px;
+        color: var(--text-muted);
+        font-size: 0.93rem;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 700px) {
+        .nav {
+          height: 66px;
+        }
+
+        .brand-name {
+          font-size: 1.12rem;
+        }
+
+        .brand-tagline {
+          font-size: 0.8rem;
+        }
+
+        .policy {
+          margin-top: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="./index.html" aria-label="WebBlock homepage">
+          <img src="./assets/icon128.png" alt="WebBlock logo" />
+          <span>
+            <span class="brand-name">WebBlock</span>
+            <span class="brand-tagline">Don't get stuck on the web.</span>
+          </span>
+        </a>
+        <a class="btn" href="./index.html">Back to site</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <article class="policy">
+        <h1>Privacy Policy</h1>
+        <p class="updated">Last updated: February 21, 2026</p>
+
+        <h2>Overview</h2>
+        <p>
+          WebBlock is a browser extension that helps users block distracting websites. WebBlock does not require an account and does not sell user data.
+        </p>
+
+        <h2>Data WebBlock processes</h2>
+        <p>WebBlock processes only the data required to enforce blocking rules chosen by the user, including:</p>
+        <ul>
+          <li>Website host/domain information needed to match and block sites.</li>
+          <li>Usage timing data (for example, active time spent on a site for daily time limits).</li>
+          <li>User settings such as block lists, schedules, Tunnel Vision configuration, and cooldown state.</li>
+        </ul>
+
+        <h2>How data is stored</h2>
+        <p>
+          WebBlock stores extension settings and state locally in Chrome storage on your device. WebBlock does not run its own backend service to store your browsing data.
+        </p>
+
+        <h2>How permissions are used</h2>
+        <ul>
+          <li><strong>declarativeNetRequest</strong>: applies dynamic block rules configured by the user.</li>
+          <li><strong>storage</strong>: saves settings and timer/cooldown state locally.</li>
+          <li><strong>alarms</strong>: runs scheduled checks, cooldown timers, and daily reset tasks.</li>
+          <li><strong>tabs</strong>: reads active tab URL/host to enforce rules and track time-limit usage.</li>
+          <li><strong>host permissions (&lt;all_urls&gt;)</strong>: allows blocking of any site selected by the user.</li>
+        </ul>
+
+        <h2>External requests</h2>
+        <p>
+          To display site icons in the popup list, WebBlock may request favicon images from Google's favicon endpoint. This request can include the site domain needed to retrieve the icon.
+        </p>
+
+        <h2>Data sharing</h2>
+        <p>
+          WebBlock does not sell personal data and does not transfer user data to third parties for advertising or unrelated purposes.
+        </p>
+
+        <h2>Data retention and control</h2>
+        <p>
+          Your extension data remains in local Chrome storage until you edit settings, clear extension data, or uninstall the extension.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          For support or privacy questions, open an issue at
+          <a href="https://github.com/neurochilds/WebBlock/issues" target="_blank" rel="noreferrer">github.com/neurochilds/WebBlock/issues</a>.
+        </p>
+
+        <p class="small">
+          This policy applies to the WebBlock Chrome extension published by neurochilds.
+        </p>
+      </article>
+    </main>
+  </body>
+</html>

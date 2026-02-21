@@ -17,16 +17,20 @@
     />
     <style>
       :root {
-        --bg-0: #070b14;
-        --bg-1: #0f1630;
-        --panel: rgba(8, 14, 30, 0.72);
-        --panel-strong: rgba(7, 12, 26, 0.9);
-        --panel-border: rgba(148, 163, 184, 0.22);
-        --text: #e5e7eb;
-        --muted: #9ca3af;
-        --accent: #6f6bff;
-        --accent-soft: rgba(111, 107, 255, 0.2);
-        --brand: #ff5b4d;
+        --bg-0: #060a14;
+        --bg-1: #0d1630;
+        --surface-0: rgba(6, 10, 20, 0.92);
+        --surface-1: rgba(12, 20, 38, 0.78);
+        --surface-2: rgba(10, 16, 30, 0.62);
+        --border-soft: rgba(148, 163, 184, 0.2);
+        --text-strong: #e7ecf7;
+        --text-body: #c9d3e7;
+        --text-muted: #94a3b8;
+        --accent: #6663f1;
+        --accent-strong: #7a77ff;
+        --accent-soft: rgba(102, 99, 241, 0.2);
+        --warn-soft: rgba(255, 165, 38, 0.16);
+        --warn-border: rgba(255, 165, 38, 0.38);
       }
 
       * {
@@ -40,11 +44,11 @@
       }
 
       body {
-        color: var(--text);
         font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text-body);
         background:
-          radial-gradient(circle at 8% -10%, rgba(111, 107, 255, 0.28), transparent 34%),
-          radial-gradient(circle at 92% 2%, rgba(255, 91, 77, 0.18), transparent 32%),
+          radial-gradient(circle at 6% -8%, rgba(122, 119, 255, 0.28), transparent 30%),
+          radial-gradient(circle at 96% 2%, rgba(255, 90, 70, 0.14), transparent 34%),
           linear-gradient(165deg, var(--bg-1), var(--bg-0));
       }
 
@@ -53,21 +57,38 @@
         margin: 0 auto;
       }
 
+      .section {
+        margin-top: 64px;
+      }
+
+      .section-title {
+        margin: 0 0 10px;
+        color: var(--text-strong);
+        font-family: "Sora", sans-serif;
+        font-size: clamp(1.2rem, 1.2vw + 1rem, 1.5rem);
+      }
+
+      .section-subtitle {
+        margin: 0;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
       header {
         position: sticky;
         top: 0;
         z-index: 20;
         backdrop-filter: blur(10px);
-        background: rgba(7, 11, 20, 0.82);
+        background: rgba(6, 10, 20, 0.86);
         border-bottom: 1px solid rgba(148, 163, 184, 0.14);
       }
 
       .nav {
+        height: 74px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        padding: 16px 0;
       }
 
       .brand {
@@ -81,103 +102,107 @@
       .brand img {
         width: 34px;
         height: 34px;
-        border-radius: 9px;
+        border-radius: 8px;
       }
 
       .brand-name {
-        font-family: "Sora", sans-serif;
-        font-size: 1.25rem;
-        line-height: 1;
-        font-weight: 700;
-      }
-
-      .brand-tag {
         display: block;
-        margin-top: 2px;
-        font-size: 0.88rem;
-        color: var(--muted);
+        font-family: "Sora", sans-serif;
+        color: var(--text-strong);
+        font-weight: 700;
+        font-size: 1.28rem;
+        line-height: 1;
       }
 
-      .nav-links {
-        display: flex;
-        gap: 10px;
+      .brand-tagline {
+        display: block;
+        margin-top: 3px;
+        color: var(--text-muted);
+        font-size: 0.88rem;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 10px;
-        border: 1px solid var(--panel-border);
+        border-radius: 11px;
+        border: 1px solid var(--border-soft);
+        color: var(--text-strong);
         text-decoration: none;
-        color: var(--text);
-        padding: 10px 15px;
         font-weight: 700;
-        font-size: 0.92rem;
+        font-size: 0.94rem;
+        line-height: 1;
+        padding: 12px 16px;
         transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
       }
 
       .btn:hover {
         transform: translateY(-1px);
-        border-color: rgba(111, 107, 255, 0.8);
+        border-color: rgba(122, 119, 255, 0.72);
       }
 
       .btn-primary {
-        background: linear-gradient(135deg, #5652e8, #6f6bff);
-        border-color: rgba(111, 107, 255, 0.92);
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        border-color: rgba(122, 119, 255, 0.9);
       }
 
-      main {
-        padding: 48px 0 74px;
+      .btn-primary:hover {
+        border-color: #8f8dff;
+      }
+
+      .btn-ghost {
+        background: rgba(8, 14, 28, 0.65);
+      }
+
+      .btn-large {
+        padding: 14px 20px;
+        font-size: 0.98rem;
       }
 
       .hero {
+        margin-top: 56px;
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.96fr);
         gap: 36px;
         align-items: center;
       }
 
       .hero-copy {
-        background: linear-gradient(154deg, rgba(14, 22, 45, 0.7), rgba(7, 12, 25, 0.82));
-        border: 1px solid var(--panel-border);
-        border-radius: 22px;
-        padding: 30px;
-        box-shadow: 0 22px 52px rgba(0, 0, 0, 0.32);
+        padding-right: 8px;
       }
 
-      .chip {
+      .hero-chip {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
         border-radius: 999px;
-        background: rgba(255, 91, 77, 0.18);
-        border: 1px solid rgba(255, 91, 77, 0.45);
-        font-size: 0.78rem;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
+        border: 1px solid rgba(255, 90, 70, 0.44);
+        background: rgba(255, 90, 70, 0.16);
+        color: #fbece9;
+        font-size: 0.76rem;
         font-weight: 700;
-        color: #f8fafc;
-        padding: 7px 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 8px 12px;
       }
 
-      h1 {
+      .hero-title {
         margin: 14px 0 14px;
+        color: var(--text-strong);
         font-family: "Sora", sans-serif;
-        font-size: clamp(2rem, 4vw, 3.25rem);
-        line-height: 1.05;
+        font-size: clamp(2.1rem, 4vw, 3.5rem);
+        line-height: 1.06;
+        max-width: 16ch;
       }
 
-      .hero-lead {
-        color: #cbd5e1;
-        font-size: 1.06rem;
-        line-height: 1.62;
+      .hero-text {
         margin: 0;
         max-width: 58ch;
+        font-size: 1.05rem;
+        line-height: 1.66;
       }
 
       .hero-actions {
-        margin-top: 22px;
+        margin-top: 24px;
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
@@ -185,105 +210,166 @@
 
       .hero-media {
         margin: 0;
-        border-radius: 22px;
-        overflow: hidden;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.36);
-        aspect-ratio: 3 / 4;
-        background: #050914;
       }
 
-      .hero-media img {
+      .browser-frame {
+        background: linear-gradient(155deg, rgba(12, 19, 36, 0.9), rgba(4, 8, 17, 0.92));
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.36);
+      }
+
+      .browser-bar {
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+        background: rgba(8, 14, 26, 0.7);
+      }
+
+      .browser-dots {
+        display: flex;
+        gap: 6px;
+      }
+
+      .browser-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(148, 163, 184, 0.65);
+      }
+
+      .browser-url {
+        color: var(--text-muted);
+        font-size: 0.74rem;
+      }
+
+      .browser-body {
+        padding: 18px;
+        background: #050913;
+      }
+
+      .browser-body img {
         display: block;
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: auto;
+        border-radius: 10px;
       }
 
-      .content-grid {
-        margin-top: 34px;
-        display: grid;
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        gap: 14px;
-      }
-
-      .card {
-        background: var(--panel);
-        border: 1px solid var(--panel-border);
-        border-radius: 16px;
-        padding: 18px;
-      }
-
-      .card h2 {
-        margin: 0 0 10px;
-        font-family: "Sora", sans-serif;
-        font-size: 1.06rem;
-      }
-
-      .card p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.64;
-      }
-
-      .col-6 {
-        grid-column: span 6;
-      }
-
-      .col-12 {
-        grid-column: span 12;
-      }
-
-      .feature-list,
-      .benefit-list {
+      .how-grid {
         margin: 0;
         padding: 0;
         list-style: none;
         display: grid;
-        gap: 11px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
       }
 
-      .feature-list li,
-      .benefit-list li {
-        border-radius: 12px;
-        border: 1px solid rgba(148, 163, 184, 0.16);
-        background: rgba(3, 7, 18, 0.34);
-        padding: 10px 12px;
-        color: #dbe3ef;
+      .how-item {
+        padding: 16px;
+        background: var(--surface-2);
+        border: 1px solid var(--border-soft);
+        border-radius: 14px;
+      }
+
+      .how-item h3 {
+        margin: 0 0 8px;
+        color: var(--text-strong);
+        font-size: 1rem;
+        font-family: "Sora", sans-serif;
+      }
+
+      .how-item p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.94rem;
         line-height: 1.55;
       }
 
-      .feature-list strong,
-      .benefit-list strong {
-        font-weight: 800;
+      .trust-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
       }
 
-      .privacy-callout {
-        border-left: 3px solid rgba(111, 107, 255, 0.9);
-        padding-left: 12px;
+      .panel {
+        background: var(--surface-1);
+        border: 1px solid var(--border-soft);
+        border-radius: 16px;
+        padding: 20px;
       }
 
-      .gallery {
-        margin-top: 34px;
-      }
-
-      .gallery h2 {
-        margin: 0 0 14px;
+      .panel h3 {
+        margin: 0 0 10px;
+        color: var(--text-strong);
         font-family: "Sora", sans-serif;
-        font-size: 1.25rem;
+        font-size: 1.12rem;
       }
 
-      .shots {
+      .panel p {
+        margin: 0;
+        color: var(--text-muted);
+        line-height: 1.62;
+      }
+
+      .compact-list {
+        margin: 14px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .compact-list li {
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        background: rgba(7, 12, 24, 0.48);
+        border-radius: 12px;
+        padding: 10px 12px;
+        line-height: 1.54;
+      }
+
+      .compact-list strong {
+        color: var(--text-strong);
+      }
+
+      .compact-list li::marker {
+        content: "";
+      }
+
+      .audience-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .audience-list li {
+        border-radius: 11px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        background: rgba(6, 12, 22, 0.5);
+        padding: 10px 12px;
+      }
+
+      .privacy-panel {
+        border-left: 3px solid var(--accent-strong);
+      }
+
+      .shots-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        gap: 12px;
       }
 
       .shot {
         margin: 0;
-        background: var(--panel-strong);
-        border: 1px solid var(--panel-border);
-        border-radius: 14px;
+        background: rgba(9, 15, 29, 0.78);
+        border: 1px solid var(--border-soft);
+        border-radius: 13px;
         overflow: hidden;
       }
 
@@ -297,76 +383,145 @@
       .shot figcaption {
         margin: 0;
         padding: 10px 12px;
-        color: #cbd5e1;
+        color: var(--text-body);
         font-size: 0.9rem;
       }
 
       .final-cta {
-        margin-top: 28px;
-        padding: 18px;
-        border-radius: 14px;
-        border: 1px solid rgba(111, 107, 255, 0.45);
-        background: linear-gradient(135deg, rgba(111, 107, 255, 0.17), rgba(21, 29, 60, 0.55));
+        margin-top: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        background: linear-gradient(135deg, rgba(102, 99, 241, 0.19), rgba(17, 25, 52, 0.65));
+        border: 1px solid rgba(122, 119, 255, 0.45);
+        border-radius: 16px;
+        padding: 20px;
+      }
+
+      .final-cta h2 {
+        margin: 0;
+        color: var(--text-strong);
+        font-family: "Sora", sans-serif;
+        font-size: 1.2rem;
       }
 
       .final-cta p {
-        margin: 0;
-        color: #dbe4ff;
-        line-height: 1.55;
+        margin: 6px 0 0;
+        color: var(--text-body);
       }
 
-      .footer {
-        margin-top: 36px;
+      footer {
+        margin: 38px 0 24px;
+        padding-top: 18px;
         border-top: 1px solid rgba(148, 163, 184, 0.2);
-        padding-top: 20px;
         display: flex;
         justify-content: space-between;
         gap: 10px;
-        color: var(--muted);
+        color: var(--text-muted);
         font-size: 0.9rem;
       }
 
-      .footer a {
-        color: #c7d2fe;
+      footer a {
+        color: #c9d2ff;
       }
 
-      @media (max-width: 980px) {
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid #9f9dff;
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 1080px) {
         .hero {
           grid-template-columns: 1fr;
+          gap: 24px;
         }
 
-        .hero-media {
-          aspect-ratio: 16 / 10;
+        .hero-title {
+          max-width: none;
         }
 
-        .col-6 {
-          grid-column: span 12;
+        .section {
+          margin-top: 56px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .how-grid,
+        .trust-grid,
+        .shots-grid {
+          grid-template-columns: 1fr 1fr;
         }
 
-        .shots {
+        .audience-list {
           grid-template-columns: 1fr;
         }
 
-        .footer {
+        .final-cta {
           flex-direction: column;
+          align-items: flex-start;
         }
       }
 
       @media (max-width: 640px) {
-        main {
-          padding-top: 28px;
+        .nav {
+          height: 66px;
         }
 
-        .hero-copy {
-          padding: 22px;
+        .brand-name {
+          font-size: 1.12rem;
         }
 
-        h1 {
-          font-size: clamp(1.8rem, 9vw, 2.4rem);
+        .brand-tagline {
+          font-size: 0.8rem;
         }
 
-        .nav-links {
-          display: none;
+        .hero {
+          margin-top: 34px;
+        }
+
+        .hero-title {
+          font-size: clamp(1.9rem, 9vw, 2.7rem);
+        }
+
+        .hero-text {
+          font-size: 0.98rem;
+        }
+
+        .btn {
+          min-height: 44px;
+          padding: 12px 14px;
+        }
+
+        .how-grid,
+        .trust-grid,
+        .shots-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section {
+          margin-top: 48px;
+        }
+
+        .section-title {
+          margin-bottom: 8px;
+        }
+
+        .final-cta {
+          margin-top: 48px;
+        }
+
+        footer {
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+          scroll-behavior: auto !important;
         }
       }
     </style>
@@ -374,110 +529,145 @@
   <body>
     <header>
       <div class="container nav">
-        <a class="brand" href="#top" aria-label="WebBlock">
+        <a class="brand" href="#top" aria-label="WebBlock homepage">
           <img src="./assets/icon128.png" alt="WebBlock logo" />
           <span>
             <span class="brand-name">WebBlock</span>
-            <span class="brand-tag">Don't get stuck on the web.</span>
+            <span class="brand-tagline">Don't get stuck on the web.</span>
           </span>
         </a>
-        <div class="nav-links">
-          <a class="btn" href="https://github.com/neurochilds/WebBlock" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="btn btn-primary" href="https://chromewebstore.google.com" target="_blank" rel="noreferrer">Install</a>
-        </div>
+        <a class="btn btn-primary" data-store-link href="https://chromewebstore.google.com" target="_blank" rel="noreferrer">Install</a>
       </div>
     </header>
 
-    <main id="top">
-      <div class="container">
-        <section class="hero">
-          <div class="hero-copy">
-            <span class="chip">Chrome Extension</span>
-            <h1>Take control of your time online.</h1>
-            <p class="hero-lead">
-              WebBlock is a powerful website blocker designed to help you stay focused, reduce distractions, and take control of your time online.
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="https://chromewebstore.google.com" target="_blank" rel="noreferrer">Chrome Web Store</a>
-              <a class="btn" href="https://github.com/neurochilds/WebBlock" target="_blank" rel="noreferrer">Source Code</a>
+    <main id="top" class="container">
+      <section class="hero" aria-label="WebBlock intro">
+        <div class="hero-copy">
+          <span class="hero-chip">Chrome Extension</span>
+          <h1 class="hero-title">Take control of your attention and your time online.</h1>
+          <p class="hero-text">
+            WebBlock is a powerful website blocker designed to help you stay focused, reduce distractions, and take control of your time online.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-large" data-store-link href="https://chromewebstore.google.com" target="_blank" rel="noreferrer">Install WebBlock</a>
+            <a class="btn btn-ghost" href="#how-it-works">See how it works</a>
+          </div>
+        </div>
+
+        <figure class="hero-media" aria-label="WebBlock UI preview">
+          <div class="browser-frame">
+            <div class="browser-bar" aria-hidden="true">
+              <div class="browser-dots">
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+              </div>
+              <span class="browser-url">webblock.app/preview</span>
+            </div>
+            <div class="browser-body">
+              <img src="./assets/screenshots/hero-dashboard.png" alt="WebBlock dashboard showing blocked sites, time limits, and actions" />
             </div>
           </div>
-          <figure class="hero-media" aria-label="WebBlock dashboard preview">
-            <img src="./assets/screenshots/hero-dashboard.png" alt="WebBlock dashboard screenshot" />
-          </figure>
-        </section>
+        </figure>
+      </section>
 
-        <section class="content-grid" aria-label="WebBlock details">
-          <article class="card col-6">
-            <h2>Flexible rules for real productivity</h2>
-            <p>Block time-wasting sites in seconds using flexible rules built for real productivity.</p>
-            <ul class="feature-list" style="margin-top: 12px;">
-              <li><strong>Always Block</strong> - completely block distracting websites.</li>
-              <li><strong>Daily Time Limits</strong> - control how long you can spend on sites.</li>
-              <li><strong>Scheduled Blocking</strong> - set recurring focus periods.</li>
-              <li><strong>Tunnel Vision Mode</strong> - allow only one site for deep work.</li>
-            </ul>
-          </article>
+      <section class="section" id="how-it-works" aria-labelledby="how-it-works-title">
+        <h2 class="section-title" id="how-it-works-title">How it works</h2>
+        <p class="section-subtitle">Block time-wasting sites in seconds using flexible rules built for real productivity.</p>
+        <ul class="how-grid" style="margin-top: 14px;">
+          <li class="how-item">
+            <h3>Always Block</h3>
+            <p>Completely block distracting websites.</p>
+          </li>
+          <li class="how-item">
+            <h3>Daily Time Limits</h3>
+            <p>Control how long you can spend on sites.</p>
+          </li>
+          <li class="how-item">
+            <h3>Scheduled Blocking</h3>
+            <p>Set recurring focus periods.</p>
+          </li>
+          <li class="how-item">
+            <h3>Tunnel Vision Mode</h3>
+            <p>Allow only one site for deep work.</p>
+          </li>
+        </ul>
+      </section>
 
-          <article class="card col-6">
-            <h2>Intentional friction</h2>
+      <section class="section" aria-label="Trust details">
+        <div class="trust-grid">
+          <article class="panel">
+            <h3>Bypass protection</h3>
             <p>Unlike typical blockers, WebBlock adds intentional friction when you try to bypass restrictions.</p>
-            <ul class="feature-list" style="margin-top: 12px;">
-              <li>Typed confirmations instead of one-click overrides.</li>
-              <li>Built-in 15-minute cooldown before access is restored.</li>
+            <ul class="compact-list">
+              <li><strong>Typed confirmations</strong> instead of one-click overrides.</li>
+              <li><strong>Built-in 15-minute cooldown</strong> before access is restored.</li>
             </ul>
-            <p style="margin-top: 12px;">
-              This helps prevent impulsive unblocking and keeps you aligned with your goals.
-            </p>
+            <p style="margin-top: 12px;">This helps prevent impulsive unblocking and keeps you aligned with your goals.</p>
           </article>
 
-          <article class="card col-6">
-            <h2>Ideal for</h2>
-            <ul class="benefit-list">
-              <li>Studying and revision.</li>
-              <li>Deep work sessions.</li>
-              <li>Reducing social media usage.</li>
-              <li>Breaking doom-scrolling habits.</li>
-            </ul>
+          <article class="panel privacy-panel">
+            <h3>Privacy-first</h3>
+            <p>WebBlock does not collect or transmit your data. All settings are stored locally in your browser.</p>
           </article>
+        </div>
+      </section>
 
-          <article class="card col-6">
-            <h2>Privacy-first</h2>
-            <p class="privacy-callout">
-              WebBlock does not collect or transmit your data. All settings are stored locally in your browser.
-            </p>
-          </article>
-        </section>
+      <section class="section" aria-labelledby="who-for-title">
+        <article class="panel">
+          <h2 class="section-title" id="who-for-title" style="margin-bottom: 12px;">Who it's for</h2>
+          <ul class="audience-list">
+            <li>Studying and revision.</li>
+            <li>Deep work sessions.</li>
+            <li>Reducing social media usage.</li>
+            <li>Breaking doom-scrolling habits.</li>
+          </ul>
+        </article>
+      </section>
 
-        <section class="gallery">
-          <h2>How it looks in practice</h2>
-          <div class="shots">
-            <figure class="shot">
-              <img src="./assets/screenshots/02-advanced-settings.png" alt="Advanced settings" />
-              <figcaption>Tunnel Vision and scheduled rules.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="./assets/screenshots/03-unblock-step-1.png" alt="Unblock step 1" />
-              <figcaption>Step 1: first confirmation.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="./assets/screenshots/04-unblock-step-2.png" alt="Unblock step 2" />
-              <figcaption>Step 2: final confirmation.</figcaption>
-            </figure>
-          </div>
-        </section>
+      <section class="section" aria-labelledby="proof-title">
+        <h2 class="section-title" id="proof-title">Product snapshots</h2>
+        <p class="section-subtitle">A quick look at setup, confirmation flow, and active focus states.</p>
+        <div class="shots-grid" style="margin-top: 14px;">
+          <figure class="shot">
+            <img src="./assets/screenshots/02-advanced-settings.png" alt="Advanced settings showing Tunnel Vision and schedule controls" />
+            <figcaption>Tunnel Vision and scheduling controls.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./assets/screenshots/03-unblock-step-1.png" alt="First unblock confirmation prompt with typed phrase" />
+            <figcaption>Step 1 confirmation prompt.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./assets/screenshots/05-dashboard-unblocking.png" alt="Dashboard with unblocking cooldown in progress" />
+            <figcaption>Cooldown state after unblock request.</figcaption>
+          </figure>
+        </div>
+      </section>
 
-        <section class="final-cta">
-          <p>Take control of your attention and build better browsing habits with WebBlock.</p>
-        </section>
+      <section class="final-cta" aria-label="Install call to action">
+        <div>
+          <h2>Take control of your attention with WebBlock.</h2>
+          <p>Build better browsing habits with clear rules and intentional friction.</p>
+        </div>
+        <a class="btn btn-primary btn-large" data-store-link href="https://chromewebstore.google.com" target="_blank" rel="noreferrer">Install on Chrome</a>
+      </section>
 
-        <footer class="footer">
-          <div>WebBlock by neurochilds.</div>
-          <div>
-            Support: <a href="https://github.com/neurochilds/WebBlock/issues" target="_blank" rel="noreferrer">GitHub Issues</a>
-          </div>
-        </footer>
-      </div>
+      <footer>
+        <span>WebBlock by neurochilds.</span>
+        <span>
+          Support: <a href="https://github.com/neurochilds/WebBlock/issues" target="_blank" rel="noreferrer">GitHub Issues</a>
+          | <a href="https://github.com/neurochilds/WebBlock" target="_blank" rel="noreferrer">GitHub</a>
+        </span>
+      </footer>
     </main>
+
+    <script>
+      const STORE_URL = "https://chromewebstore.google.com";
+      document.querySelectorAll("[data-store-link]").forEach((link) => {
+        link.href = STORE_URL;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      });
+    </script>
   </body>
 </html>

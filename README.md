@@ -14,25 +14,25 @@ Block distracting websites, set daily time limits, schedule block windows, or us
 - Delayed unblock flow with typed confirmations + cooldown
 - Local-first data storage (no external backend)
 
-## Screenshots
+## Example
 
-### 1) Dashboard (current status)
+### Dashboard
 
 ![WebBlock dashboard](screenshots/01-dashboard.png)
 
-### 2) Advanced settings (Tunnel Vision + schedules)
+### Advanced settings (Tunnel Vision + schedules)
 
 ![WebBlock advanced settings](screenshots/02-advanced-settings.png)
 
-### 3) Unblock flow — step 1 (intent check)
+### Unblock flow — step 1 (first confirmation)
 
 ![WebBlock unblock step 1](screenshots/03-unblock-step-1.png)
 
-### 4) Unblock flow — step 2 (final typed confirmation)
+### Unblock flow — step 2 (final confirmation)
 
 ![WebBlock unblock step 2](screenshots/04-unblock-step-2.png)
 
-### 5) Dashboard (cooldown pending)
+### Unblock flow — step 3 (await cooldown)
 
 ![WebBlock blocked state](screenshots/05-dashboard-unblocking.png)
 

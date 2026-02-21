@@ -377,11 +377,16 @@
         object-position: top center;
       }
 
-      .shot figcaption {
+      .shot-heading {
         margin: 0;
         padding: 10px 12px;
-        color: var(--text-body);
-        font-size: 0.9rem;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+        background: rgba(7, 12, 24, 0.62);
+        color: var(--text-strong);
+        font-family: "Sora", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        line-height: 1.35;
       }
 
       .final-cta {
@@ -624,19 +629,19 @@
 
       <section class="section" aria-labelledby="proof-title">
         <h2 class="section-title" id="proof-title">Product snapshots</h2>
-        <p class="section-subtitle">A quick look at setup, confirmation flow, and active focus states.</p>
+        <p class="section-subtitle">Unblock flow examples from first confirmation through cooldown.</p>
         <div class="shots-grid" style="margin-top: 14px;">
           <figure class="shot">
-            <img src="./assets/screenshots/02-advanced-settings-raw.png" alt="Advanced settings showing Tunnel Vision and schedule controls" />
-            <figcaption>Tunnel Vision and scheduling controls.</figcaption>
-          </figure>
-          <figure class="shot">
+            <p class="shot-heading">Unblock step 1 - first confirmation</p>
             <img src="./assets/screenshots/03-unblock-step-1-raw.png" alt="First unblock confirmation prompt with typed phrase" />
-            <figcaption>Step 1 confirmation prompt.</figcaption>
           </figure>
           <figure class="shot">
-            <img src="./assets/screenshots/05-dashboard-unblocking-raw.png" alt="Dashboard with unblocking cooldown in progress" />
-            <figcaption>Cooldown state after unblock request.</figcaption>
+            <p class="shot-heading">Unblock step 2 - final confirmation</p>
+            <img src="./assets/screenshots/04-unblock-step-2-raw.png" alt="Final unblock confirmation prompt before scheduling unblock" />
+          </figure>
+          <figure class="shot">
+            <p class="shot-heading">Unblock step 3 - 15 minute cool down</p>
+            <img src="./assets/screenshots/05-dashboard-unblocking-raw.png" alt="Dashboard with 15-minute unblock cooldown in progress" />
           </figure>
         </div>
       </section>

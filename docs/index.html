@@ -355,10 +355,6 @@
         padding: 10px 12px;
       }
 
-      .privacy-panel {
-        border-left: 3px solid var(--accent-strong);
-      }
-
       .shots-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -376,8 +372,9 @@
       .shot img {
         display: block;
         width: 100%;
-        aspect-ratio: 16 / 10;
+        aspect-ratio: 3 / 4;
         object-fit: cover;
+        object-position: top center;
       }
 
       .shot figcaption {
@@ -606,7 +603,7 @@
             <p style="margin-top: 12px;">This helps prevent impulsive unblocking and keeps you aligned with your goals.</p>
           </article>
 
-          <article class="panel privacy-panel">
+          <article class="panel">
             <h3>Privacy-first</h3>
             <p>WebBlock does not collect or transmit your data. All settings are stored locally in your browser.</p>
           </article>
@@ -630,15 +627,15 @@
         <p class="section-subtitle">A quick look at setup, confirmation flow, and active focus states.</p>
         <div class="shots-grid" style="margin-top: 14px;">
           <figure class="shot">
-            <img src="./assets/screenshots/02-advanced-settings.png" alt="Advanced settings showing Tunnel Vision and schedule controls" />
+            <img src="./assets/screenshots/02-advanced-settings-raw.png" alt="Advanced settings showing Tunnel Vision and schedule controls" />
             <figcaption>Tunnel Vision and scheduling controls.</figcaption>
           </figure>
           <figure class="shot">
-            <img src="./assets/screenshots/03-unblock-step-1.png" alt="First unblock confirmation prompt with typed phrase" />
+            <img src="./assets/screenshots/03-unblock-step-1-raw.png" alt="First unblock confirmation prompt with typed phrase" />
             <figcaption>Step 1 confirmation prompt.</figcaption>
           </figure>
           <figure class="shot">
-            <img src="./assets/screenshots/05-dashboard-unblocking.png" alt="Dashboard with unblocking cooldown in progress" />
+            <img src="./assets/screenshots/05-dashboard-unblocking-raw.png" alt="Dashboard with unblocking cooldown in progress" />
             <figcaption>Cooldown state after unblock request.</figcaption>
           </figure>
         </div>

@@ -2,14 +2,13 @@
 
 Don't get stuck on the web.
 
-WebBlock is a Chrome extension for blocking distractions with a simple, strict workflow.  
-Block distracting websites, set daily time limits, schedule block windows, or use Tunnel Vision mode to block all but one website.
+WebBlock is a Chrome extension for blocking distracting websites.  
 
 ## Features
 
 - Always block specific sites
 - Daily time limits per site
-- Scheduled block windows and scheduled allow-only windows
+- Scheduled block windows and allow-only windows
 - Tunnel Vision: allow only one site for a fixed duration
 - Delayed unblock flow with typed confirmations + cooldown
 - Local-first data storage (no external backend)

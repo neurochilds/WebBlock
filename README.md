@@ -14,8 +14,6 @@ Block distracting websites, set daily time limits, schedule block windows, or us
 - Delayed unblock flow with typed confirmations + cooldown
 - Local-first data storage (no external backend)
 
-## Example
-
 ### Dashboard
 
 ![WebBlock dashboard](screenshots/01-dashboard.png)

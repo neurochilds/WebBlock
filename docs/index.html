@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebBlock | Don't get stuck on the web.</title>
+    <title>WebBlock | Website Blocker for Focus & Productivity</title>
     <meta
       name="description"
-      content="WebBlock helps you block distracting websites with daily limits, scheduled windows, and Tunnel Vision mode."
+      content="Block distracting websites, set time limits, and stay focused with WebBlock. A powerful Chrome website blocker with smart rules and friction-based controls."
     />
     <link rel="icon" type="image/png" sizes="128x128" href="./assets/icon128.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -126,9 +126,9 @@
 
       .hero {
         display: grid;
-        grid-template-columns: 1.1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 28px;
-        align-items: center;
+        align-items: stretch;
       }
 
       .hero-card {
@@ -137,6 +137,9 @@
         border-radius: 18px;
         padding: 28px;
         box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
       }
 
       .label {
@@ -169,23 +172,33 @@
       }
 
       .hero-actions {
-        margin-top: 22px;
+        margin-top: auto;
+        padding-top: 22px;
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
       }
 
       .mock {
+        margin: 0;
         border-radius: 18px;
-        overflow: hidden;
         border: 1px solid rgba(148, 163, 184, 0.3);
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        background: linear-gradient(155deg, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.74));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        height: 100%;
       }
 
       .mock img {
         display: block;
         width: 100%;
+        max-width: 100%;
         height: auto;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
       }
 
       .section {
@@ -300,9 +313,9 @@
         <section class="hero">
           <div class="hero-card">
             <span class="label">Chrome Extension</span>
-            <h1>Stop distractions before they steal your day.</h1>
+            <h1>Block distracting websites before they take over your day.</h1>
             <p>
-              Block distracting websites, set daily time limits, schedule block windows, or use Tunnel Vision mode to block all but one website.
+              Block distracting websites, set daily limits, schedule focus sessions, or use Tunnel Vision mode to allow only one site.
             </p>
             <div class="hero-actions" id="install">
               <a class="btn btn-primary" href="https://chromewebstore.google.com" target="_blank" rel="noreferrer">Chrome Web Store</a>
@@ -316,30 +329,30 @@
 
         <section class="section">
           <h2>What WebBlock does</h2>
-          <p>Simple controls, strict overrides, and fast setup for real focus sessions.</p>
+          <p>Simple controls, strict overrides, and fast setup for real, distraction-free focus.</p>
           <div class="feature-grid">
             <article class="feature">
               <strong>Always Block</strong>
-              <span>Hard-stop specific sites with one click.</span>
+              <span>Instantly block specific websites with one click.</span>
             </article>
             <article class="feature">
               <strong>Daily Time Limits</strong>
-              <span>Use social apps intentionally without losing hours.</span>
+              <span>Use social apps intentionally without losing track of time.</span>
             </article>
             <article class="feature">
               <strong>Scheduled Rules</strong>
-              <span>Set block windows for work, study, or sleep.</span>
+              <span>Schedule blocking for work, study, or sleep.</span>
             </article>
             <article class="feature">
               <strong>Tunnel Vision</strong>
-              <span>Allow one site for a set duration, block everything else.</span>
+              <span>Allow one site for a set time while blocking everything else.</span>
             </article>
           </div>
         </section>
 
         <section class="section">
           <h2>Unblock flow with friction</h2>
-          <p>WebBlock requires typed confirmations and a cooldown to reduce impulse unblocking.</p>
+          <p>WebBlock requires typed confirmations and a cooldown to prevent impulsive unblocking.</p>
           <div class="shot-grid">
             <figure class="shot">
               <img src="./assets/screenshots/03-unblock-step-1.png" alt="Unblock flow step 1" />
@@ -359,7 +372,7 @@
         <section class="section">
           <h2>Privacy</h2>
           <p>
-            WebBlock runs locally in your browser. It stores settings and timers in Chrome local storage and does not require an account.
+            WebBlock runs locally in your browser. Settings and timers are stored in Chrome local storage. No account required.
           </p>
         </section>
 

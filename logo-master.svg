@@ -1,0 +1,34 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ban" x1="68" y1="68" x2="188" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF6A5A"/>
+      <stop offset="1" stop-color="#FF3B30"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="16" y="16" width="224" height="224" rx="52" fill="#090B10"/>
+  <rect x="16.5" y="16.5" width="223" height="223" rx="51.5" stroke="white" stroke-opacity="0.08"/>
+
+  <g stroke="#DCE8FF" stroke-linecap="round" stroke-opacity="0.92">
+    <circle cx="128" cy="128" r="10" stroke-width="5"/>
+    <path d="M128 128L128 60" stroke-width="5"/>
+    <path d="M128 128L176.08 79.92" stroke-width="5"/>
+    <path d="M128 128L196 128" stroke-width="5"/>
+    <path d="M128 128L176.08 176.08" stroke-width="5"/>
+    <path d="M128 128L128 196" stroke-width="5"/>
+    <path d="M128 128L79.92 176.08" stroke-width="5"/>
+    <path d="M128 128L60 128" stroke-width="5"/>
+    <path d="M128 128L79.92 79.92" stroke-width="5"/>
+  </g>
+
+  <g stroke="#DCE8FF" stroke-opacity="0.75" stroke-width="4.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 128.00 100.00 Q 134.64 111.96 147.80 108.20 Q 144.04 121.36 156.00 128.00 Q 144.04 134.64 147.80 147.80 Q 134.64 144.04 128.00 156.00 Q 121.36 144.04 108.20 147.80 Q 111.96 134.64 100.00 128.00 Q 111.96 121.36 108.20 108.20 Q 121.36 111.96 128.00 100.00"/>
+    <path d="M 128.00 80.00 Q 139.39 100.51 161.94 94.06 Q 155.49 116.61 176.00 128.00 Q 155.49 139.39 161.94 161.94 Q 139.39 155.49 128.00 176.00 Q 116.61 155.49 94.06 161.94 Q 100.51 139.39 80.00 128.00 Q 100.51 116.61 94.06 94.06 Q 116.61 100.51 128.00 80.00"/>
+    <path d="M 128.00 60.00 Q 144.13 89.05 176.08 79.92 Q 166.95 111.87 196.00 128.00 Q 166.95 144.13 176.08 176.08 Q 144.13 166.95 128.00 196.00 Q 111.87 166.95 79.92 176.08 Q 89.05 144.13 60.00 128.00 Q 89.05 111.87 79.92 79.92 Q 111.87 89.05 128.00 60.00"/>
+  </g>
+
+  <g>
+    <circle cx="128" cy="128" r="88" stroke="url(#ban)" stroke-width="20"/>
+    <path d="M190.23 65.77L65.77 190.23" stroke="url(#ban)" stroke-width="20" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebBlock</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+
+    <header class="header">
+      <div class="header-brand">
+        <img src="icon48.png" alt="WebBlock logo" class="logo-img">
+        <div class="brand-text">
+          <span class="app-name">WebBlock</span>
+          <span class="app-tagline">Don't get stuck on the web.</span>
+        </div>
+      </div>
+      <div class="header-stats" id="headerStats"></div>
+    </header>
+
+    <!-- ── Main View ── -->
+    <div id="mainView">
+      <section id="sitesSection">
+        <div class="section-label">Blocked Sites</div>
+        <div id="sitesList"></div>
+        <div class="empty-state" id="emptyState">No sites added yet — add one below.</div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="add-section">
+        <div class="section-label">Add Site</div>
+        <input type="text" id="hostInput" class="text-input" placeholder="youtube.com" autocomplete="off" spellcheck="false">
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="blockBtn">Always Block</button>
+          <button class="mode-btn" id="limitBtn">Time Limit</button>
+        </div>
+        <div class="limit-row" id="limitRow">
+          <input type="number" id="minutesInput" class="number-input" value="30" min="1" max="1440">
+          <span class="limit-label">minutes / day</span>
+        </div>
+        <button class="add-btn" id="addBtn">Add Site</button>
+        <div class="error-msg" id="errorMsg"></div>
+      </section>
+
+      <button class="advanced-btn" id="advancedBtn">Advanced Settings ›</button>
+    </div>
+
+    <!-- ── Advanced View ── -->
+    <div id="advancedView" style="display:none">
+      <button class="back-btn" id="backBtn">‹ Back</button>
+
+      <!-- Tunnel Vision -->
+      <section class="adv-section">
+        <div class="section-label">Tunnel Vision</div>
+
+        <div id="tunnelActive" style="display:none">
+          <div class="tunnel-card">
+            <div class="tunnel-card-top">
+              <div class="tunnel-status-dot"></div>
+              <span class="tunnel-status-label">Active</span>
+              <span class="tunnel-countdown" id="tunnelCountdown"></span>
+            </div>
+            <div class="tunnel-allowed">
+              <img class="site-favicon" id="tunnelFavicon" src="">
+              <span id="tunnelAllowedHost"></span>
+              <span class="tunnel-only-label">only</span>
+            </div>
+            <button class="tunnel-end-btn" id="tunnelEndBtn">End Session</button>
+          </div>
+        </div>
+
+        <div id="tunnelForm">
+          <p class="adv-description">Block everything except one site for a set period.</p>
+          <input type="text" id="tunnelHostInput" class="text-input adv-input" placeholder="gmail.com" autocomplete="off" spellcheck="false">
+          <div class="limit-row visible adv-input-row">
+            <input type="number" id="tunnelMinutes" class="number-input" value="30" min="1" max="480">
+            <span class="limit-label">minutes</span>
+          </div>
+          <button class="adv-action-btn green" id="tunnelStartBtn">Enter Tunnel Vision</button>
+          <div class="error-msg adv-error" id="tunnelErrorMsg"></div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Scheduled Rules -->
+      <section class="adv-section">
+        <div class="section-label">Scheduled Rules</div>
+        <p class="adv-description">Block a site during certain hours, or allow it only during certain hours.</p>
+
+        <div id="scheduleList"></div>
+        <div class="empty-state" id="scheduleEmpty" style="display:none">No scheduled rules yet.</div>
+
+        <div class="schedule-form">
+          <input type="text" id="schedHostInput" class="text-input adv-input" placeholder="instagram.com" autocomplete="off" spellcheck="false">
+
+          <div class="mode-toggle adv-input">
+            <button class="mode-btn active" id="schedBlockBtn">Block during</button>
+            <button class="mode-btn" id="schedAllowBtn">Allow only during</button>
+          </div>
+
+          <div class="time-row adv-input-row">
+            <div class="time-field">
+              <label class="time-label">From</label>
+              <input type="time" id="schedStart" class="time-input" value="20:00">
+            </div>
+            <div class="time-field">
+              <label class="time-label">To</label>
+              <input type="time" id="schedEnd" class="time-input" value="08:00">
+            </div>
+          </div>
+
+          <button class="adv-action-btn" id="schedAddBtn">Add Schedule Rule</button>
+          <div class="error-msg adv-error" id="schedErrorMsg"></div>
+        </div>
+      </section>
+
+      <div style="height: 4px"></div>
+    </div>
+
+  </div>
+
+  <!-- Tunnel vision cancel confirmation -->
+  <div class="modal-overlay" id="tunnelCancelOverlay">
+    <div class="modal">
+      <p class="modal-warning">End tunnel vision early?</p>
+      <p class="modal-prompt" id="tunnelCancelText"></p>
+      <div class="modal-actions">
+        <button class="modal-cancel" id="tunnelCancelNo">Keep going</button>
+        <button class="modal-confirm" id="tunnelCancelYes">End session</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final confirmation modal (shown after 15 min delay) -->
+  <div class="modal-overlay" id="finalModalOverlay">
+    <div class="modal">
+      <p class="modal-warning">The 15 minutes is up. This is your last chance.</p>
+      <p class="modal-prompt" id="finalModalText"></p>
+      <div class="modal-actions">
+        <button class="modal-cancel" id="finalModalNo">No, keep it blocked</button>
+        <button class="modal-confirm" id="finalModalYes">Yes, unblock it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unblock confirmation modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-step" id="modalStep1">
+        <p class="modal-prompt" id="modalPrompt1"></p>
+        <input type="text" class="modal-input" id="modalInput1" autocomplete="off" spellcheck="false">
+        <p class="modal-hint" id="modalHint1"></p>
+        <div class="modal-actions">
+          <button class="modal-cancel" id="modalCancel1">Cancel</button>
+          <button class="modal-confirm" id="modalConfirm1" disabled>Next</button>
+        </div>
+      </div>
+      <div class="modal-step" id="modalStep2" style="display:none">
+        <p class="modal-warning" id="modalWarning2">Are you sure you won't regret unblocking this site?</p>
+        <p class="modal-prompt" id="modalPrompt2"></p>
+        <input type="text" class="modal-input" id="modalInput2" autocomplete="off" spellcheck="false">
+        <p class="modal-hint" id="modalHint2"></p>
+        <div class="modal-actions">
+          <button class="modal-cancel" id="modalCancel2">Cancel</button>
+          <button class="modal-confirm" id="modalConfirm2" disabled>Schedule Unblock</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<svg width="1200" height="360" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ban" x1="78" y1="78" x2="230" y2="230" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF6A5A"/>
+      <stop offset="1" stop-color="#FF3B30"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="360" rx="32" fill="#090B10"/>
+
+  <g transform="translate(40 40)">
+    <rect x="0" y="0" width="280" height="280" rx="62" fill="#0D111A"/>
+    <rect x="0.5" y="0.5" width="279" height="279" rx="61.5" stroke="white" stroke-opacity="0.08"/>
+
+    <g stroke="#DCE8FF" stroke-linecap="round" stroke-opacity="0.92">
+      <circle cx="140" cy="140" r="11" stroke-width="5"/>
+      <path d="M140 140L140 66" stroke-width="5"/>
+      <path d="M140 140L192.33 87.67" stroke-width="5"/>
+      <path d="M140 140L214 140" stroke-width="5"/>
+      <path d="M140 140L192.33 192.33" stroke-width="5"/>
+      <path d="M140 140L140 214" stroke-width="5"/>
+      <path d="M140 140L87.67 192.33" stroke-width="5"/>
+      <path d="M140 140L66 140" stroke-width="5"/>
+      <path d="M140 140L87.67 87.67" stroke-width="5"/>
+    </g>
+
+    <g stroke="#DCE8FF" stroke-opacity="0.75" stroke-width="4.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 140.00 109.00 Q 147.36 122.24 161.92 118.08 Q 157.76 132.64 171.00 140.00 Q 157.76 147.36 161.92 161.92 Q 147.36 157.76 140.00 171.00 Q 132.64 157.76 118.08 161.92 Q 122.24 147.36 109.00 140.00 Q 122.24 132.64 118.08 118.08 Q 132.64 122.24 140.00 109.00"/>
+      <path d="M 140.00 88.00 Q 152.34 110.21 176.77 103.23 Q 169.79 127.66 192.00 140.00 Q 169.79 152.34 176.77 176.77 Q 152.34 169.79 140.00 192.00 Q 127.66 169.79 103.23 176.77 Q 110.21 152.34 88.00 140.00 Q 110.21 127.66 103.23 103.23 Q 127.66 110.21 140.00 88.00"/>
+      <path d="M 140.00 66.00 Q 157.56 97.61 192.33 87.67 Q 182.39 122.44 214.00 140.00 Q 182.39 157.56 192.33 192.33 Q 157.56 182.39 140.00 214.00 Q 122.44 182.39 87.67 192.33 Q 97.61 157.56 66.00 140.00 Q 97.61 122.44 87.67 87.67 Q 122.44 97.61 140.00 66.00"/>
+    </g>
+
+    <circle cx="140" cy="140" r="96" stroke="url(#ban)" stroke-width="20"/>
+    <path d="M207.88 72.12L72.12 207.88" stroke="url(#ban)" stroke-width="20" stroke-linecap="round"/>
+  </g>
+
+  <text x="370" y="148" fill="#F4F6FA" font-family="Avenir Next, SF Pro Display, Segoe UI, Helvetica, Arial, sans-serif" font-size="112" font-weight="700" letter-spacing="-2">WebBlock</text>
+  <text x="372" y="214" fill="#8FA0BF" font-family="Avenir Next, SF Pro Text, Segoe UI, Helvetica, Arial, sans-serif" font-size="38" font-weight="500" letter-spacing="0.2">Don't get stuck on the web.</text>
+</svg>

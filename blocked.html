@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebBlock — Blocked</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      color: #f5f5f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      text-align: center;
+      max-width: 420px;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: #1c1c1e;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .icon-wrap svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .host {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 32px;
+    }
+
+    /* Progress (shown for time limits) */
+    .usage-block {
+      width: 100%;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .usage-label {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .usage-bar {
+      height: 4px;
+      background: #2a2a2a;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .usage-fill {
+      height: 100%;
+      background: #FF9F0A;
+      border-radius: 2px;
+    }
+
+    .usage-text {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .usage-text strong {
+      color: #f5f5f7;
+    }
+
+    .reset-info {
+      font-size: 13px;
+      color: #444;
+    }
+
+    .reset-info strong {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-wrap">
+      <!-- lock icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="#5856D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+
+    <div class="host" id="hostEl">—</div>
+    <h1 id="headlineEl">This site is blocked.</h1>
+    <p class="subtitle" id="subtitleEl">You set this up. Stay focused.</p>
+
+    <div class="usage-block" id="usageBlock" style="display:none">
+      <div class="usage-label">Today's usage</div>
+      <div class="usage-bar"><div class="usage-fill" id="usageFill"></div></div>
+      <div class="usage-text" id="usageText"></div>
+    </div>
+
+    <div class="reset-info" id="resetInfo"></div>
+  </div>
+
+  <script src="blocked.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "WebBlock",
   "version": "1.0.0",
-  "description": "Don't get stuck on the web. Block distracting websites, set daily time limits, schedule block windows, or use Tunnel Vision mode to block all but one website.",
+  "description": "Block distracting websites with daily limits, scheduled windows, and Tunnel Vision that allows only one site.",
   "permissions": [
     "declarativeNetRequest",
     "storage",
@@ -10,7 +10,9 @@
     "tabs"
   ],
   "minimum_chrome_version": "102",
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
@@ -27,8 +29,14 @@
       "48": "icon48.png"
     }
   },
-  "web_accessible_resources": [{
-    "resources": ["blocked.html"],
-    "matches": ["<all_urls>"]
-  }]
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "blocked.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }

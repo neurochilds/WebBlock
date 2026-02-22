@@ -4,6 +4,17 @@ let currentMode = 'block';
 let schedMode = 'schedule-block';
 let modalHost = null;
 let finalModalHost = null;
+const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
+const DISPLAY_DAY_ORDER = [1, 2, 3, 4, 5, 6, 0];
+const DAY_LABELS = {
+  0: 'Sun',
+  1: 'Mon',
+  2: 'Tue',
+  3: 'Wed',
+  4: 'Thu',
+  5: 'Fri',
+  6: 'Sat'
+};
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
 
@@ -63,6 +74,71 @@ function faviconUrl(host) {
 
 function send(msg) {
   return new Promise(resolve => chrome.runtime.sendMessage(msg, resolve));
+}
+
+function normalizeScheduleDays(days) {
+  if (!Array.isArray(days) || days.length === 0) return [...ALL_DAYS];
+  const unique = [...new Set(
+    days
+      .map((d) => Number(d))
+      .filter((d) => Number.isInteger(d) && d >= 0 && d <= 6)
+  )];
+  return unique.length > 0 ? unique.sort((a, b) => a - b) : [...ALL_DAYS];
+}
+
+function formatScheduleDays(days) {
+  const normalized = normalizeScheduleDays(days);
+  const set = new Set(normalized);
+  if (set.size === 7) return 'Every day';
+  if ([1, 2, 3, 4, 5].every((d) => set.has(d)) && set.size === 5) return 'Weekdays';
+  if ([0, 6].every((d) => set.has(d)) && set.size === 2) return 'Weekends';
+  return DISPLAY_DAY_ORDER.filter((d) => set.has(d)).map((d) => DAY_LABELS[d]).join(', ');
+}
+
+function getSelectedScheduleDays() {
+  return Array.from(document.querySelectorAll('#schedDays .day-btn.active'))
+    .map((btn) => Number(btn.dataset.day))
+    .filter((d) => Number.isInteger(d) && d >= 0 && d <= 6)
+    .sort((a, b) => a - b);
+}
+
+function setSelectedScheduleDays(days) {
+  const normalized = new Set(normalizeScheduleDays(days));
+  for (const btn of document.querySelectorAll('#schedDays .day-btn')) {
+    const day = Number(btn.dataset.day);
+    btn.classList.toggle('active', normalized.has(day));
+  }
+}
+
+function initScheduleDayButtons() {
+  const buttons = Array.from(document.querySelectorAll('#schedDays .day-btn'));
+  for (const btn of buttons) {
+    btn.addEventListener('click', () => {
+      const isActive = btn.classList.contains('active');
+      if (isActive && getSelectedScheduleDays().length === 1) return;
+      btn.classList.toggle('active');
+    });
+  }
+}
+
+function setScheduleMode(mode) {
+  schedMode = mode === 'schedule-allow' ? 'schedule-allow' : 'schedule-block';
+  document.getElementById('schedBlockBtn').classList.toggle('active', schedMode === 'schedule-block');
+  document.getElementById('schedAllowBtn').classList.toggle('active', schedMode === 'schedule-allow');
+}
+
+function setScheduleButtonLabel(isEdit) {
+  document.getElementById('schedAddBtn').textContent = isEdit ? 'Update Schedule Rule' : 'Add Schedule Rule';
+}
+
+function loadScheduleIntoForm(host, config) {
+  document.getElementById('schedHostInput').value = host;
+  document.getElementById('schedStart').value = config.scheduleStart || '20:00';
+  document.getElementById('schedEnd').value = config.scheduleEnd || '08:00';
+  setScheduleMode(config.mode);
+  setSelectedScheduleDays(config.scheduleDays);
+  setScheduleButtonLabel(true);
+  document.getElementById('schedErrorMsg').textContent = '';
 }
 
 // ─── View switching ───────────────────────────────────────────────────────────
@@ -273,17 +349,8 @@ document.getElementById('tunnelCancelNo').addEventListener('click', () => {
 // ─── Scheduled rules ─────────────────────────────────────────────────────────
 
 // Mode toggle for schedule form
-document.getElementById('schedBlockBtn').addEventListener('click', () => {
-  schedMode = 'schedule-block';
-  document.getElementById('schedBlockBtn').classList.add('active');
-  document.getElementById('schedAllowBtn').classList.remove('active');
-});
-
-document.getElementById('schedAllowBtn').addEventListener('click', () => {
-  schedMode = 'schedule-allow';
-  document.getElementById('schedAllowBtn').classList.add('active');
-  document.getElementById('schedBlockBtn').classList.remove('active');
-});
+document.getElementById('schedBlockBtn').addEventListener('click', () => setScheduleMode('schedule-block'));
+document.getElementById('schedAllowBtn').addEventListener('click', () => setScheduleMode('schedule-allow'));
 
 document.getElementById('schedAddBtn').addEventListener('click', async () => {
   const errEl = document.getElementById('schedErrorMsg');
@@ -296,15 +363,29 @@ document.getElementById('schedAddBtn').addEventListener('click', async () => {
   const end = document.getElementById('schedEnd').value;
   if (!start || !end) { errEl.textContent = 'Set both start and end times'; return; }
   if (start === end) { errEl.textContent = 'Start and end times must differ'; return; }
+  const scheduleDays = getSelectedScheduleDays();
+  if (scheduleDays.length === 0) { errEl.textContent = 'Pick at least one day'; return; }
 
-  const res = await send({ type: 'addSchedule', host, mode: schedMode, scheduleStart: start, scheduleEnd: end });
+  const res = await send({
+    type: 'addSchedule',
+    host,
+    mode: schedMode,
+    scheduleStart: start,
+    scheduleEnd: end,
+    scheduleDays
+  });
 
   if (res && res.conflict) {
     errEl.textContent = res.conflict;
     return;
   }
+  if (res && res.error) {
+    errEl.textContent = res.error;
+    return;
+  }
 
   document.getElementById('schedHostInput').value = '';
+  setScheduleButtonLabel(false);
   render();
 });
 
@@ -338,7 +419,8 @@ function renderScheduleList(sites) {
     const detail = document.createElement('div');
     detail.className = 'schedule-item-detail';
     const action = config.mode === 'schedule-block' ? 'Blocked' : 'Allowed only';
-    detail.textContent = `${action} ${formatTime(config.scheduleStart)} – ${formatTime(config.scheduleEnd)}`;
+    detail.textContent =
+      `${action} ${formatTime(config.scheduleStart)} – ${formatTime(config.scheduleEnd)} · ${formatScheduleDays(config.scheduleDays)}`;
 
     info.appendChild(hostEl);
     info.appendChild(detail);
@@ -347,6 +429,11 @@ function renderScheduleList(sites) {
     removeBtn.className = 'remove-btn';
     removeBtn.textContent = '×';
     removeBtn.addEventListener('click', () => openModal(host));
+
+    item.addEventListener('click', (e) => {
+      if (e.target === removeBtn || e.target.closest('.remove-btn')) return;
+      loadScheduleIntoForm(host, config);
+    });
 
     item.appendChild(img);
     item.appendChild(info);
@@ -428,7 +515,8 @@ function renderSite(host, config, usedSeconds, pendingRemovals, readyToConfirm) 
 
     const timeEl = document.createElement('span');
     timeEl.className = 'sched-time';
-    timeEl.textContent = `${label} ${formatTime(config.scheduleStart)}–${formatTime(config.scheduleEnd)}`;
+    timeEl.textContent =
+      `${label} ${formatTime(config.scheduleStart)}–${formatTime(config.scheduleEnd)} · ${formatScheduleDays(config.scheduleDays)}`;
     meta.appendChild(timeEl);
 
   } else {
@@ -547,5 +635,8 @@ document.getElementById('hostInput').addEventListener('keydown', (e) => {
 
 // ─── Refresh every second (countdowns) ───────────────────────────────────────
 
+initScheduleDayButtons();
+setSelectedScheduleDays(ALL_DAYS);
+setScheduleButtonLabel(false);
 setInterval(render, 1000);
 render();

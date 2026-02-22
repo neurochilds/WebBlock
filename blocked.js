@@ -26,6 +26,28 @@ function timeUntilMidnight() {
   return h > 0 ? h + 'h ' + m + 'm' : m + 'm';
 }
 
+function formatTime(t) {
+  if (!t || typeof t !== 'string' || !/^\d{2}:\d{2}$/.test(t)) return '';
+  const [h, m] = t.split(':').map(Number);
+  const period = h >= 12 ? 'PM' : 'AM';
+  const hour = h % 12 || 12;
+  return m > 0 ? `${hour}:${String(m).padStart(2, '0')}${period}` : `${hour}${period}`;
+}
+
+function formatScheduleDays(days) {
+  const allDays = [0, 1, 2, 3, 4, 5, 6];
+  const valid = Array.isArray(days)
+    ? [...new Set(days.map(Number).filter((d) => Number.isInteger(d) && d >= 0 && d <= 6))]
+    : allDays;
+  const set = new Set(valid.length > 0 ? valid : allDays);
+  if (set.size === 7) return 'every day';
+  if ([1, 2, 3, 4, 5].every((d) => set.has(d)) && set.size === 5) return 'weekdays';
+  if ([0, 6].every((d) => set.has(d)) && set.size === 2) return 'weekends';
+  const order = [1, 2, 3, 4, 5, 6, 0];
+  const labelMap = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
+  return order.filter((d) => set.has(d)).map((d) => labelMap[d]).join(', ');
+}
+
 function render(info) {
   const resetEl = document.getElementById('resetInfo');
 
@@ -50,13 +72,15 @@ function render(info) {
     document.getElementById('headlineEl').textContent = 'This site is blocked.';
     document.getElementById('subtitleEl').textContent = 'You blocked this site with WebBlock.';
   } else if (config.mode === 'schedule-block') {
+    const window = `${formatTime(config.scheduleStart)}–${formatTime(config.scheduleEnd)}`;
     document.getElementById('headlineEl').textContent = 'This site is blocked right now.';
     document.getElementById('subtitleEl').textContent =
-      host + ' is scheduled to be blocked during these hours.';
+      `${host} is blocked on ${formatScheduleDays(config.scheduleDays)} during ${window}.`;
   } else if (config.mode === 'schedule-allow') {
+    const window = `${formatTime(config.scheduleStart)}–${formatTime(config.scheduleEnd)}`;
     document.getElementById('headlineEl').textContent = 'Outside allowed hours.';
     document.getElementById('subtitleEl').textContent =
-      host + ' is only allowed during its scheduled window.';
+      `${host} is only allowed on ${formatScheduleDays(config.scheduleDays)} during ${window}.`;
   } else {
     const limitSec = (config.dailyLimit || 0) * 60;
     const pct = limitSec > 0 ? Math.min(100, (usedSeconds / limitSec) * 100) : 100;

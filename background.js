@@ -1,6 +1,7 @@
 // WebBlock — background service worker
 
 const ALARM_NAME = 'selfBlocTick';
+const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -155,15 +156,42 @@ async function redirectOpenTabs(host) {
 
 // ─── Schedule helpers ────────────────────────────────────────────────────────
 
-function isInTimeWindow(start, end) {
+function parseTimeToMinutes(value) {
+  if (typeof value !== 'string' || !/^\d{2}:\d{2}$/.test(value)) return null;
+  const [h, m] = value.split(':').map(Number);
+  if (!Number.isInteger(h) || !Number.isInteger(m)) return null;
+  if (h < 0 || h > 23 || m < 0 || m > 59) return null;
+  return h * 60 + m;
+}
+
+function normalizeScheduleDays(days) {
+  if (!Array.isArray(days) || days.length === 0) return [...ALL_DAYS];
+  const unique = [...new Set(
+    days
+      .map((d) => Number(d))
+      .filter((d) => Number.isInteger(d) && d >= 0 && d <= 6)
+  )];
+  return unique.length > 0 ? unique.sort((a, b) => a - b) : [...ALL_DAYS];
+}
+
+function isInTimeWindowOnDays(start, end, scheduleDays) {
+  const s = parseTimeToMinutes(start);
+  const e = parseTimeToMinutes(end);
+  if (s == null || e == null || s === e) return false;
+
+  const activeDays = new Set(normalizeScheduleDays(scheduleDays));
   const now = new Date();
   const cur = now.getHours() * 60 + now.getMinutes();
-  const [sh, sm] = start.split(':').map(Number);
-  const [eh, em] = end.split(':').map(Number);
-  const s = sh * 60 + sm, e = eh * 60 + em;
+  const today = now.getDay();
+  const yesterday = (today + 6) % 7;
+
   // If start < end: same-day window (e.g. 09:00–17:00)
+  if (s < e) {
+    return activeDays.has(today) && cur >= s && cur < e;
+  }
   // If start > end: overnight window (e.g. 20:00–08:00)
-  return s <= e ? (cur >= s && cur < e) : (cur >= s || cur < e);
+  if (cur >= s) return activeDays.has(today);
+  return cur < e && activeDays.has(yesterday);
 }
 
 // ─── Tunnel Vision ───────────────────────────────────────────────────────────
@@ -209,6 +237,7 @@ async function updateRules() {
   const removeRuleIds = existing.map(r => r.id);
 
   const addRules = [];
+  const blockedHosts = new Set();
   let id = 1;
 
   // Per-site block/limit/schedule rules
@@ -222,12 +251,13 @@ async function updateRules() {
     } else if (config.mode === 'limit') {
       shouldBlock = config.dailyLimit > 0 && usedSec >= config.dailyLimit * 60;
     } else if (config.mode === 'schedule-block') {
-      shouldBlock = isInTimeWindow(config.scheduleStart, config.scheduleEnd);
+      shouldBlock = isInTimeWindowOnDays(config.scheduleStart, config.scheduleEnd, config.scheduleDays);
     } else if (config.mode === 'schedule-allow') {
-      shouldBlock = !isInTimeWindow(config.scheduleStart, config.scheduleEnd);
+      shouldBlock = !isInTimeWindowOnDays(config.scheduleStart, config.scheduleEnd, config.scheduleDays);
     }
 
     if (shouldBlock) {
+      blockedHosts.add(host);
       addRules.push({
         id: id++,
         priority: 1,
@@ -279,6 +309,11 @@ async function updateRules() {
   }
 
   await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds, addRules });
+
+  // DNR only affects future navigations. Redirect currently open matching tabs now.
+  for (const host of blockedHosts) {
+    await redirectOpenTabs(host);
+  }
 }
 
 // ─── Event Listeners ─────────────────────────────────────────────────────────
@@ -417,6 +452,26 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       case 'addSchedule': {
         const sites = await getSites();
         const existing = sites[msg.host];
+        const startMin = parseTimeToMinutes(msg.scheduleStart);
+        const endMin = parseTimeToMinutes(msg.scheduleEnd);
+        const scheduleDays = normalizeScheduleDays(msg.scheduleDays);
+
+        if (!isValidConfiguredHost(msg.host)) {
+          sendResponse({ error: 'Invalid host.' });
+          break;
+        }
+        if (msg.mode !== 'schedule-block' && msg.mode !== 'schedule-allow') {
+          sendResponse({ error: 'Invalid schedule mode.' });
+          break;
+        }
+        if (startMin == null || endMin == null || startMin === endMin) {
+          sendResponse({ error: 'Invalid schedule times.' });
+          break;
+        }
+        if (scheduleDays.length === 0) {
+          sendResponse({ error: 'Pick at least one day.' });
+          break;
+        }
 
         // Conflict detection
         if (existing) {
@@ -428,20 +483,13 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
             sendResponse({ conflict: `${msg.host} already has a time limit. Remove it first.` });
             break;
           }
-          if (existing.mode === 'schedule-block' && msg.mode === 'schedule-allow') {
-            sendResponse({ conflict: `${msg.host} already has a scheduled block. Remove it first.` });
-            break;
-          }
-          if (existing.mode === 'schedule-allow' && msg.mode === 'schedule-block') {
-            sendResponse({ conflict: `${msg.host} already has a scheduled allow window. Remove it first.` });
-            break;
-          }
         }
 
         sites[msg.host] = {
           mode: msg.mode,
           scheduleStart: msg.scheduleStart,
-          scheduleEnd: msg.scheduleEnd
+          scheduleEnd: msg.scheduleEnd,
+          scheduleDays
         };
         await saveSites(sites);
         await updateRules();
